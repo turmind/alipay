@@ -14,6 +14,8 @@ AliPay SDK for Golang
 ## 帮助
 
 在集成的过程中有遇到问题，欢迎加 QQ 群 564704807 讨论。
+在原有基础上增加了APP支付宝登录。基于v2.0.2开发，不作更新。有需要转入原开发地址。
+微信支付 [https://github.com/smartwalle/alipay](https://github.com/smartwalle/alipay)
 
 ## 其它支付
 
@@ -112,6 +114,10 @@ PayPal [https://github.com/smartwalle/paypal](https://github.com/smartwalle/payp
 * **查询对账单下载地址**
 	
 	alipay.data.dataservice.bill.downloadurl.query - **BillDownloadURLQuery()**
+
+* **App支付宝登录**
+	
+	alipay.open.auth.sdk.code.get - **AuthAccount()**
 
 #### 通知
 	

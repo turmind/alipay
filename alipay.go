@@ -23,6 +23,7 @@ var (
 
 type Client struct {
 	appId              string
+	pId                string
 	apiDomain          string
 	notifyVerifyDomain string
 	appPrivateKey      *rsa.PrivateKey // 应用私钥
@@ -36,7 +37,7 @@ type Client struct {
 // aliPublicKey - 支付宝公钥，创建支付宝应用之后，从支付宝后台获取
 // privateKey - 应用私钥，开发者自己生成
 // isProduction - 是否为生产环境，传 false 的时候为沙箱环境，用于开发测试，正式上线的时候需要改为 true
-func New(appId, aliPublicKey, privateKey string, isProduction bool) (client *Client, err error) {
+func New(appId, pId, aliPublicKey, privateKey string, isProduction bool) (client *Client, err error) {
 	pri, err := encoding.ParsePKCS1PrivateKey(encoding.FormatPrivateKey(privateKey))
 	if err != nil {
 		return nil, err
@@ -52,6 +53,7 @@ func New(appId, aliPublicKey, privateKey string, isProduction bool) (client *Cli
 
 	client = &Client{}
 	client.appId = appId
+	client.pId = pId
 	client.appPrivateKey = pri
 	client.aliPublicKey = pub
 
@@ -76,6 +78,7 @@ func (this *Client) URLValues(param Param) (value url.Values, err error) {
 	p.Add("sign_type", this.SignType)
 	p.Add("timestamp", time.Now().Format(kTimeFormat))
 	p.Add("version", kVersion)
+	p.Add("pid", this.pId)
 
 	if len(param.ExtJSONParamName()) > 0 {
 		p.Add(param.ExtJSONParamName(), param.ExtJSONParamValue())
